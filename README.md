@@ -23,3 +23,4 @@ Control your system terminal using natural language. Run commands, manage files,
 
 _For technical details and architecture, see [README_DEVELOPER.md](README_DEVELOPER.md)._
 # Terminal_to_Gemini_Agent
+# Terminal_to_Gemini_Agent
