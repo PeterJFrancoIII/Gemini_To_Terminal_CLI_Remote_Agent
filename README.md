@@ -22,3 +22,4 @@ Control your system terminal using natural language. Run commands, manage files,
 *   **Execute**: Commands run in your terminal. Risks are color-coded (Red = Dangerous, Green = Safe).
 
 _For technical details and architecture, see [README_DEVELOPER.md](README_DEVELOPER.md)._
+# Terminal_to_Gemini_Agent
