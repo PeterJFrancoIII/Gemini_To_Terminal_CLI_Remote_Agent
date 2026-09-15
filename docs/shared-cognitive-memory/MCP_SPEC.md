@@ -1,5 +1,10 @@
 # Shared Cognitive Memory MCP Specification
 
+Canonical docs:
+`https://github.com/PeterJFrancoIII/Gemini_To_Terminal_CLI_Remote_Agent/tree/main/docs/shared-cognitive-memory`
+
+All Gemini, GPT/ChatGPT, Codex, Antigravity, and other authorized agents performing Shared Memory MCP work must follow and cite [`SHARED_MEMORY_AGENT_RULES.md`](SHARED_MEMORY_AGENT_RULES.md).
+
 ## Non-Negotiable Invariants
 
 1. **One canonical brain**: one local shared knowledge graph is authoritative.
@@ -13,28 +18,29 @@
    - `create_entities`
    - `create_relations`
 5. **No dangerous general capability**: no shell, arbitrary filesystem, delete, eval, or unrestricted network tools through this MCP.
-6. **Dialogue is not truth**: handoffs and coordination remain untrusted until validated and promoted to the appropriate canonical project entity.
+6. **Dialogue is not truth**: handoffs remain untrusted until validated and promoted to the appropriate canonical project entity.
 7. **Private state remains local**: never commit `memory.json`, auth tokens, private logs, or secrets to GitHub.
+8. **Explicit provenance**: whenever an agent acts on another agent's work, cite `Shared Memory: <SESSION/ENTITY> | MSG:<message-id>`.
 
 ## Session Lifecycle
 
 Every agent/session must follow this order:
 
-1. Identify `session_id`, `agent_id`, and `project_id`.
-2. Open the session working-memory node.
-3. Read active task, last completed work, pending work, blockers, and canonical links.
-4. Retrieve only required canonical nodes with `search_nodes` / `open_nodes`.
-5. Execute authorized work.
-6. Verify empirically where possible.
-7. Update the session state concisely.
+1. Identify exact `session_id`, `agent_id`, and `project_id`.
+2. Retrieve relevant context with `search_nodes` then `open_nodes`.
+3. Check relevant `InterAgent_Dialogue_Channel` messages.
+4. Execute authorized work.
+5. Verify empirically where possible.
+6. Cite peer-agent provenance whenever used.
+7. Update session state concisely.
 8. Promote only durable, validated facts to canonical project entities.
-9. Post a concise handoff to `InterAgent_Dialogue_Channel` only when another agent needs it.
+9. Post a concise handoff only when another agent needs it.
 
 ## Retrieval Policy
 
 Preferred order:
 
-`session node -> linked canonical nodes -> search_nodes -> open_nodes`
+`session/project search -> open_nodes -> linked canonical nodes`
 
 `read_graph` is exceptional/debug/recovery-only because full-graph reads waste tokens and mix unrelated context.
 
@@ -50,26 +56,18 @@ Human-friendly session ID example:
 
 ## Handoff Format
 
-Use only needed fields:
+Every inter-agent message must begin:
 
-```text
-[TIMESTAMP | Agent -> Agent]
-STATUS: <current state>
-CHANGES: <exact changes>
-VERIFICATION: <tests/evidence>
-NEXT: <next action>
-BLOCKER: <only if applicable>
-```
+`[TIMESTAMP | SOURCE → DESTINATION | MSG:<unique-id> | SESSION:<canonical-session-id>]`
 
-Avoid routine acknowledgements and progress chatter.
+Use only needed payload fields such as `STATUS:`, `CHANGES:`, `VERIFICATION:`, `ACTION:`, `ACK:`, `NEXT:`, and `BLOCKER:`. Avoid routine acknowledgements and progress chatter.
 
 ## Security
 
-- MCP transport must be authenticated and encrypted when it leaves the local device.
-- The local service should bind to loopback unless LAN exposure is explicitly required.
-- Unauthorized requests must be rejected.
-- Credentials must never be stored as graph observations.
-- A remote transport is a path to the local MCP, not a data store and not canonical memory.
+- Credentials must never be stored as graph observations or committed to GitHub.
+- Never edit `memory.json` directly; all Shared Memory reads/writes go through the hardened MCP.
+- Never restore delete tools or the retired stock 9-tool server.
+- Never create, restore, or modify MCP network ingress unless explicitly authorized by the user and recorded as a canonical architecture decision in Shared Memory.
 
 ## Conflict Order
 
@@ -82,8 +80,18 @@ When information conflicts:
 5. Inter-agent dialogue
 6. Agent assumptions
 
-Lower-priority information must never silently override higher-priority information.
+Lower-priority information must never silently override higher-priority information. Use `SUPERSEDES: <prior entity/message/state>` when canonical state changes.
+
+## Required Citations
+
+When using another agent's Shared Memory work:
+
+`Shared Memory: <SESSION/ENTITY> | MSG:<message-id>`
+
+When performing Shared Memory MCP architecture/coordination work:
+
+`Shared Memory MCP Rules: https://github.com/PeterJFrancoIII/Gemini_To_Terminal_CLI_Remote_Agent/tree/main/docs/shared-cognitive-memory`
 
 ## Human Escalation
 
-Escalate only for genuine blockers, security-sensitive architectural decisions, material scope changes, destructive/irreversible actions, conflicting governance, or decisions requiring human authority.
+Escalate only genuine blockers, security-sensitive architectural decisions, material scope changes, destructive/irreversible actions, conflicting governance, or decisions requiring human authority.
