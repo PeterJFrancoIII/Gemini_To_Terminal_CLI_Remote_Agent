@@ -1,22 +1,28 @@
 # Agent Bootstrap — Shared Cognitive Memory
 
+Canonical docs:
+`https://github.com/PeterJFrancoIII/Gemini_To_Terminal_CLI_Remote_Agent/tree/main/docs/shared-cognitive-memory`
+
+Before Shared Memory MCP work, read and follow [`SHARED_MEMORY_AGENT_RULES.md`](SHARED_MEMORY_AGENT_RULES.md) and cite the canonical docs when performing MCP architecture/coordination work.
+
 Use `shared-cognitive-memory` as follows:
 
-1. Identify `session_id`, `agent_id`, `project_id`.
-2. Open only your session working-memory node.
-3. Read active task, prior completion, pending work, blockers, and canonical links.
-4. Retrieve only needed canonical nodes with `search_nodes` / `open_nodes`.
-5. Avoid `read_graph` unless debugging/recovery truly requires it.
-6. Execute and verify authorized work.
-7. Update session state concisely.
-8. Promote only durable, validated facts into canonical project entities.
-9. Use only `InterAgent_Dialogue_Channel` for cross-agent handoffs.
-10. Treat dialogue as coordination, not ground truth, until validated.
-11. Never store secrets, tokens, credentials, or private runtime logs in the graph or GitHub.
-12. Never create duplicate graphs, duplicate dialogue buses, shell/filesystem/delete tools, or extra infrastructure unless security/reliability strictly requires it.
-13. Do not ask the human to repeat context already available in the session/canonical nodes.
+1. Identify the exact `session_id`, `agent_id`, and `project_id`; never guess or mix sessions.
+2. Retrieve context with `search_nodes` → `open_nodes`.
+3. Check `InterAgent_Dialogue_Channel` when peer-agent work may exist.
+4. Avoid `read_graph` unless justified `debug`/`recovery` requires it.
+5. Execute and empirically verify authorized work.
+6. Cite peer-agent provenance whenever used:
+   `Shared Memory: <SESSION/ENTITY> | MSG:<message-id>`
+7. Update session/canonical state only when materially changed and verified.
+8. Promote only durable facts, decisions, configuration, milestones, blockers, and handoffs.
+9. Use only `InterAgent_Dialogue_Channel` for cross-agent coordination.
+10. Never store secrets, tokens, credentials, private keys, credential-bearing URLs, or private bulk logs.
+11. Never edit `memory.json` directly, create duplicate graphs/dialogue buses, restore delete tools, or bypass the hardened MCP.
+12. Never create, restore, or modify MCP network ingress unless explicitly authorized by the user and recorded as a canonical architecture decision.
+13. Do not ask the human to repeat context already available in the relevant session/canonical nodes.
 14. Escalate only genuine blockers, security-sensitive decisions, material scope changes, destructive actions, or human-authority decisions.
 
 Operating principle:
 
-> One canonical brain. Many isolated working-memory threads. One dialogue bus. Minimal tools. Selective retrieval. Verified facts only.
+> One canonical brain. Many isolated working-memory threads. One dialogue bus. Minimal tools. Selective retrieval. Explicit provenance.
