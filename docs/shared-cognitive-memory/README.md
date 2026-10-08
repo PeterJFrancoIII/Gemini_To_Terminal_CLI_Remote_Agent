@@ -74,6 +74,7 @@ Every new agent/session must:
 - `SHARED_MEMORY_AGENT_RULES.md` — mandatory universal operating rules.
 - `MCP_SPEC.md` — architecture, invariants, capability model, conflict precedence, security, and lifecycle specification.
 - `AGENT_BOOTSTRAP.md` — concise startup procedure.
+- `LOCAL_TRANSPORT.md` — authorized local transport architecture, retiring public ngrok dependency while preserving golden master baseline.
 
 Operating principle:
 
