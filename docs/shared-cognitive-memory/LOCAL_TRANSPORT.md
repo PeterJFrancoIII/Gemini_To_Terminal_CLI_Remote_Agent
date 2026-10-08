@@ -68,7 +68,7 @@ The remote ngrok public tunnel dependency has been permanently retired. The arch
 | Full Regression Suite | Local STDIO / HTTP | **PASS** | 22/22 tests passing (`tests/mcp_runtime.test.js`) |
 | Codex CLI (`codex exec`) | Local STDIO | **PASS** | `search_nodes` and `open_nodes` executed live with full response |
 | Gemini / Antigravity | Local MCP Tool | **PASS** | `search_nodes`, `open_nodes`, and `add_observations` executed live |
-| Safe File Inspection | Local MCP | **PASS** | `list_shared_memory_files` (13 files); `read_shared_memory_file` (valid allowlist); `memory.json` access denied fail-closed |
+| Safe File Inspection | Local MCP | **PASS** | `list_shared_memory_files` (14 files, including `LOCAL_TRANSPORT.md`); `read_shared_memory_file` (valid allowlist); `memory.json` access denied fail-closed |
 | Ingress Retirement | Process / Network | **PASS** | ngrok process terminated; supervisor daemon updated; zero public listener |
 | Credential Hygiene | Host Storage | **PASS** | Tunnel token rotated in `~/.shared_memory_tunnel_token`; query string tokens deprecated |
 
